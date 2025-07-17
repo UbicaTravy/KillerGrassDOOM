@@ -1,5 +1,5 @@
 #include "game.h"
-#include "trig_tables.h"
+#include "trig_tables.h"  // Добавлен include
 #include <windows.h>
 #include <cmath>
 
