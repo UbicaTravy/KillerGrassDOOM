@@ -5,10 +5,6 @@
 #include <cmath>
 #include <cstdlib>
 
-float cosTable[3600];
-float sinTable[3600];
-bool tablesInitialized = false;
-
 void InitTrigTables() {
     if (tablesInitialized) return;
     
@@ -28,10 +24,6 @@ HDC hdcMem = nullptr;
 
 unsigned int wallTexture[TEXTURE_SIZE * TEXTURE_SIZE];
 unsigned int floorTexture[TEXTURE_SIZE * TEXTURE_SIZE];
-
-float cosTable[3600];
-float sinTable[3600];
-bool tablesInitialized = false;
 
 struct RayData {
     float rayDirX;
@@ -75,17 +67,6 @@ void GenerateTextures() {
             }
         }
     }
-}
-
-void InitTrigTables() {
-    if (tablesInitialized) return;
-    
-    for (int i = 0; i < 3600; i++) {
-        float angle = i * 0.1f * 3.14159f / 180.0f;
-        cosTable[i] = std::cos(angle);
-        sinTable[i] = std::sin(angle);
-    }
-    tablesInitialized = true;
 }
 
 void PrecomputeRays() {
