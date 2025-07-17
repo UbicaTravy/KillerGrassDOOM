@@ -5,8 +5,6 @@
 #include <cmath>
 #include <cstdlib>
 
-// Удалены объявления таблиц
-
 void InitTrigTables() {
     if (tablesInitialized) return;
     
