@@ -5,7 +5,6 @@
 #include <cmath>
 #include <cstdlib>
 
-// Добавим в начало файла:
 float cosTable[3600];
 float sinTable[3600];
 bool tablesInitialized = false;
@@ -21,23 +20,19 @@ void InitTrigTables() {
     tablesInitialized = true;
 }
 
-// Буфер отрисовки
 unsigned int* buffer = nullptr;
 int bufferWidth = SCREEN_WIDTH;
 int bufferHeight = SCREEN_HEIGHT;
 HBITMAP hBitmap = nullptr;
 HDC hdcMem = nullptr;
 
-// Текстуры
 unsigned int wallTexture[TEXTURE_SIZE * TEXTURE_SIZE];
 unsigned int floorTexture[TEXTURE_SIZE * TEXTURE_SIZE];
 
-// Оптимизация: предвычисленные синусы/косинусы
 float cosTable[3600];
 float sinTable[3600];
 bool tablesInitialized = false;
 
-// Предварительно вычисленные данные для лучей
 struct RayData {
     float rayDirX;
     float rayDirY;
@@ -49,28 +44,24 @@ struct RayData {
 
 RayData precomputedRays[SCREEN_WIDTH];
 
-// Генерация процедурных текстур
 void GenerateTextures() {
-    // Генерация текстуры стены (кирпичи)
     for (int y = 0; y < TEXTURE_SIZE; y++) {
         for (int x = 0; x < TEXTURE_SIZE; x++) {
             int idx = y * TEXTURE_SIZE + x;
             
-            // Кирпичная стена
             bool brick = (x % 16 < 14) && (y % 16 < 14);
             bool mortar = (x % 16 == 14) || (y % 16 == 14);
             
             if (mortar) {
-                wallTexture[idx] = RGB(100, 100, 100); // раствор
+                wallTexture[idx] = RGB(100, 100, 100);
             } else if (brick) {
-                wallTexture[idx] = RGB(180, 80, 60); // кирпич
+                wallTexture[idx] = RGB(180, 80, 60);
             } else {
-                wallTexture[idx] = RGB(80, 80, 100); // тень
+                wallTexture[idx] = RGB(80, 80, 100);
             }
         }
     }
     
-    // Генерация текстуры пола (плитка)
     for (int y = 0; y < TEXTURE_SIZE; y++) {
         for (int x = 0; x < TEXTURE_SIZE; x++) {
             int idx = y * TEXTURE_SIZE + x;
@@ -78,15 +69,14 @@ void GenerateTextures() {
             bool tile = (x / 16 % 2) ^ (y / 16 % 2);
             
             if (tile) {
-                floorTexture[idx] = RGB(100, 100, 150); // синяя плитка
+                floorTexture[idx] = RGB(100, 100, 150);
             } else {
-                floorTexture[idx] = RGB(120, 120, 170); // светлая плитка
+                floorTexture[idx] = RGB(120, 120, 170);
             }
         }
     }
 }
 
-// Инициализация тригонометрических таблиц
 void InitTrigTables() {
     if (tablesInitialized) return;
     
@@ -98,7 +88,6 @@ void InitTrigTables() {
     tablesInitialized = true;
 }
 
-// Инициализация предварительных вычислений
 void PrecomputeRays() {
     for (int x = 0; x < SCREEN_WIDTH; x++) {
         float rayAngle = player.angle - FOV/2.0f + (static_cast<float>(x)/SCREEN_WIDTH) * FOV;
@@ -120,15 +109,12 @@ void PrecomputeRays() {
 }
 
 void InitRenderer(HDC hdc) {
-    // Освобождаем предыдущие ресурсы
     if (buffer) delete[] buffer;
     if (hBitmap) DeleteObject(hBitmap);
     if (hdcMem) DeleteDC(hdcMem);
     
-    // Выделяем буфер
     buffer = new unsigned int[bufferWidth * bufferHeight];
     
-    // Создаем DIB-секцию
     BITMAPINFO bmi;
     ZeroMemory(&bmi, sizeof(BITMAPINFO));
     bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -142,13 +128,10 @@ void InitRenderer(HDC hdc) {
     hdcMem = CreateCompatibleDC(hdc);
     SelectObject(hdcMem, hBitmap);
     
-    // Инициализируем таблицы
     InitTrigTables();
     
-    // Предварительные вычисления для лучей
     PrecomputeRays();
     
-    // Генерация текстур
     GenerateTextures();
 }
 
@@ -163,41 +146,33 @@ void CleanupRenderer() {
 }
 
 void Render() {
-    // Очистка буфера (небо)
     unsigned int skyColor = RGB(100, 150, 255);
     for (int y = 0; y < bufferHeight/2; y++) {
         unsigned int* row = buffer + y * bufferWidth;
         std::fill(row, row + bufferWidth, skyColor);
     }
 
-    // Отрисовка пола с текстурой
     for (int y = bufferHeight/2; y < bufferHeight; y++) {
-        // Рассчитываем расстояние до точки на полу
         float rowDist = (0.5f * bufferHeight) / (y - bufferHeight/2 + 0.1f);
         
-        // Рассчитываем шаг для текстуры
         float floorStepX = rowDist * (cosTable[static_cast<int>((player.angle + FOV/2) * 180.0f / 3.14159f * 10) % 3600] - 
                            cosTable[static_cast<int>((player.angle - FOV/2) * 180.0f / 3.14159f * 10) % 3600]) / bufferWidth;
         
         float floorStepY = rowDist * (sinTable[static_cast<int>((player.angle + FOV/2) * 180.0f / 3.14159f * 10) % 3600] - 
                            sinTable[static_cast<int>((player.angle - FOV/2) * 180.0f / 3.14159f * 10) % 3600]) / bufferWidth;
         
-        // Начальная точка
         float floorX = player.x + rowDist * cosTable[static_cast<int>((player.angle - FOV/2) * 180.0f / 3.14159f * 10) % 3600];
         float floorY = player.y + rowDist * sinTable[static_cast<int>((player.angle - FOV/2) * 180.0f / 3.14159f * 10) % 3600];
         
         for (int x = 0; x < bufferWidth; x++) {
-            // Тексельные координаты
             int texX = static_cast<int>(floorX * TEXTURE_SIZE) % TEXTURE_SIZE;
             int texY = static_cast<int>(floorY * TEXTURE_SIZE) % TEXTURE_SIZE;
             
             if (texX < 0) texX += TEXTURE_SIZE;
             if (texY < 0) texY += TEXTURE_SIZE;
             
-            // Получаем цвет текстуры
             unsigned int color = floorTexture[texY * TEXTURE_SIZE + texX];
             
-            // Затемнение по расстоянию
             float distFactor = 1.0f / (1.0f + rowDist * 0.1f);
             color = RGB(
                 GetRValue(color) * distFactor,
@@ -205,16 +180,13 @@ void Render() {
                 GetBValue(color) * distFactor
             );
             
-            // Устанавливаем пиксель
             buffer[y * bufferWidth + x] = color;
             
-            // Следующий шаг
             floorX += floorStepX;
             floorY += floorStepY;
         }
     }
 
-    // Raycasting с текстурами для стен
     for (int x = 0; x < bufferWidth; x++) {
         const RayData& rd = precomputedRays[x];
         
@@ -235,7 +207,6 @@ void Render() {
             sideDistY = (mapY + 1.0f - player.y) * rd.deltaDistY;
         }
         
-        // DDA цикл
         bool hit = false;
         int side = 0;
         float perpWallDist = MAX_DEPTH;
@@ -269,12 +240,10 @@ void Render() {
         }
         
         if (hit && perpWallDist < MAX_DEPTH) {
-            // Вычисление высоты стены
             int lineHeight = static_cast<int>(bufferHeight / perpWallDist);
             int drawStart = std::max(0, -lineHeight/2 + bufferHeight/2);
             int drawEnd = std::min(bufferHeight - 1, lineHeight/2 + bufferHeight/2);
             
-            // Текстурирование стены
             float wallX;
             if (side == 0) {
                 wallX = player.y + perpWallDist * rd.rayDirY;
@@ -283,26 +252,20 @@ void Render() {
             }
             wallX -= std::floor(wallX);
             
-            // Координата X текстуры
             int texX = static_cast<int>(wallX * TEXTURE_SIZE);
             if ((side == 0 && rd.rayDirX > 0) || (side == 1 && rd.rayDirY < 0)) {
                 texX = TEXTURE_SIZE - texX - 1;
             }
             
-            // Шаг текстуры и начальная позиция
             float step = 1.0f * TEXTURE_SIZE / lineHeight;
             float texPos = (drawStart - bufferHeight/2 + lineHeight/2) * step;
             
-            // Отрисовка текстурированной стены
             for (int y = drawStart; y < drawEnd; y++) {
-                // Координата Y текстуры
                 int texY = static_cast<int>(texPos) % TEXTURE_SIZE;
                 texPos += step;
                 
-                // Получаем цвет текстуры
                 unsigned int color = wallTexture[texY * TEXTURE_SIZE + texX];
                 
-                // Затемнение для разных сторон
                 if (side == 1) {
                     color = RGB(
                         GetRValue(color) * 0.7f,
@@ -311,7 +274,6 @@ void Render() {
                     );
                 }
                 
-                // Устанавливаем пиксель
                 buffer[y * bufferWidth + x] = color;
             }
         }
