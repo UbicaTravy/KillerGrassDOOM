@@ -34,7 +34,6 @@ void UpdateGame(float deltaTime) {
     float lookX = cosTable[angleIndex];
     float lookY = sinTable[angleIndex];
     
-    // Исправленный перпендикулярный вектор
     float perpX = lookY;
     float perpY = -lookX;
 
@@ -49,17 +48,15 @@ void UpdateGame(float deltaTime) {
         moveY -= lookY * PLAYER_SPEED * deltaTime;
     }
     
-    // Исправленные направления движения
     if (GetAsyncKeyState('D') & 0x8000) {
-        moveX -= perpX * PLAYER_SPEED * deltaTime;  // Изменено с + на -
-        moveY -= perpY * PLAYER_SPEED * deltaTime;  // Изменено с + на -
+        moveX -= perpX * PLAYER_SPEED * deltaTime;
+        moveY -= perpY * PLAYER_SPEED * deltaTime;
     }
     if (GetAsyncKeyState('A') & 0x8000) {
-        moveX += perpX * PLAYER_SPEED * deltaTime;  // Изменено с - на +
-        moveY += perpY * PLAYER_SPEED * deltaTime;  // Изменено с - на +
+        moveX += perpX * PLAYER_SPEED * deltaTime;
+        moveY += perpY * PLAYER_SPEED * deltaTime;
     }
     
-    // Поворот камеры
     if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
         player.angle -= ROTATION_SPEED * deltaTime;
     }
@@ -67,11 +64,9 @@ void UpdateGame(float deltaTime) {
         player.angle += ROTATION_SPEED * deltaTime;
     }
     
-    // Нормализация угла
     player.angle = fmod(player.angle, 2 * 3.14159f);
     if (player.angle < 0) player.angle += 2 * 3.14159f;
     
-    // Проверка коллизий
     if (CanMoveTo(player.x + moveX, player.y)) {
         player.x += moveX;
     }
