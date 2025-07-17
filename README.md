@@ -45,6 +45,12 @@ In `file resourses.rc` path to icon
 MAINICON ICON "img/icon.ico"
 ```
 
+# Game process
+
+`WASD` - move
+
+Arrows - camera
+
 # Useful links
 
 [Ray Casting](https://lodev.org/cgtutor/raycasting.html)
