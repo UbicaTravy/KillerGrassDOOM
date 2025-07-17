@@ -112,9 +112,6 @@ void InitRenderer(HDC hdc) {
     SelectObject(hdcMem, hBitmap);
     
     InitTrigTables();
-    
-    PrecomputeRays();
-    
     GenerateTextures();
 }
 
@@ -129,6 +126,10 @@ void CleanupRenderer() {
 }
 
 void Render() {
+    // Пересчитываем лучи каждый кадр - это исправляет вращение стен
+    PrecomputeRays();
+
+    // Отрисовка неба
     unsigned int skyColor = RGB(100, 150, 255);
     for (int y = 0; y < bufferHeight/2; y++) {
         unsigned int* row = buffer + y * bufferWidth;
