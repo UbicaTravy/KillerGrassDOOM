@@ -4,7 +4,7 @@
 ![G++](https://img.shields.io/badge/G++-00599C?style=flat&logo=c%2B%2B&logoColor=white)
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg" width="20" alt="Windows"/>
 
-This is README on English
+This is the English README
 
 [![Русский](https://img.shields.io/badge/README-Русский-blue)](README_ru.md)
 
@@ -34,7 +34,7 @@ make
 
 Done! The file `killer_grass_doom.exe` will appear in your folder!
 
-## Building relise:
+## Building release:
 
 ```bash
 windres resources.rc -o resources.o
@@ -57,9 +57,9 @@ Arrows - camera
 
 [Ray Casting](https://lodev.org/cgtutor/raycasting.html)
 
-[BSP](https://ru.wikipedia.org/wiki/%D0%94%D0%B2%D0%BE%D0%B8%D1%87%D0%BD%D0%BE%D0%B5_%D1%80%D0%B0%D0%B7%D0%B1%D0%B8%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%B0)
+[BSP](https://en.wikipedia.org/wiki/Binary_space_partitioning)
 
-# Bags now
+# Current bugs
 
 Floor rendering is a bit lame, we are working on this bug at the moment. If you want to help and know how - write to me!
 
