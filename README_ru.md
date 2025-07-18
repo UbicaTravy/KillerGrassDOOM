@@ -4,66 +4,66 @@
 ![G++](https://img.shields.io/badge/G++-00599C?style=flat&logo=c%2B%2B&logoColor=white)
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg" width="20" alt="Windows"/>
 
-This is README on English
+Это README на русском
 
-[![Русский](https://img.shields.io/badge/README-Русский-blue)](README_ru.md)
+[![English](https://img.shields.io/badge/README-Русский-blue)](README_ru.md)
 
 <div align="center">
 <img src="img/icon.png" width="400" alt="Windows"/>
 </div>
 
-# Educational minimal parody DOOM
+# Минимальная учебная пародия DOOM
 
-This is a minimal educational parody of DOOM with Ray Casting and BSP functions. This game is written for educational purposes in pure C++ only under Windows. 
+Это минималистичная образовательная пародия на DOOM с Ray Casting и функциями BSP. Игра написана в образовательных целях на чистом C++ только под Windows.
 
-# Installing
+# Установка
 
-To use the game you need to install `g++` and have Windows7/8/10 (or any where you can install g++). The authors use `g++` version `14.2.0`.
+Для игры вам потребуется установленный `g++` и Windows 7/8/10 (или любой другой, где можно установить g++). Авторы используют `g++` версии `14.2.0`.
 
-Clone repository:
+Склонируйте репозиторий:
 
 ```bash
 git clone https://github.com/UbicaTravy/KillerGrassDOOM
 ```
 
-For build executable file run the build.bat file or use `Makefile`:
+Для сборки исполняемого файла запустите файл build.bat или используйте `Makefile`:
 
 ```bash
 make
 ```
 
-Done! The file `killer_grass_doom.exe` will appear in your folder!
+Готово! Файл `killer_grass_doom.exe` появится в вашей папке!
 
-## Building relise:
+## Постройка релиза:
 
 ```bash
 windres resources.rc -o resources.o
 g++ -O3 -Wall -Wextra -static -mwindows -o killer_grass_doom.exe main.o game.o render.o trig_tables.o resources.o -lgdi32 -lwinmm
 ```
 
-In `file resourses.rc` path to icon
+В файле `resourses.rc` путь к значку
 
 ```
 MAINICON ICON "img/icon.ico"
 ```
 
-# Game process
+# Игровой процесс
 
-`WASD` - move
+`WASD` — движение
 
-Arrows - camera
+Стрелки — камера
 
-# Useful links
+# Полезные ссылки
 
 [Ray Casting](https://lodev.org/cgtutor/raycasting.html)
 
 [BSP](https://ru.wikipedia.org/wiki/%D0%94%D0%B2%D0%BE%D0%B8%D1%87%D0%BD%D0%BE%D0%B5_%D1%80%D0%B0%D0%B7%D0%B1%D0%B8%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%B0)
 
-# Bags now
+# Баги сейчас
 
-Floor rendering is a bit lame, we are working on this bug at the moment. If you want to help and know how - write to me!
+Рендеринг пола немного хромает, мы сейчас работаем над этой ошибкой. Если хотите помочь и знаете как — напишите мне!
 
-# Screenshots from game
+# Скриншоты из игры
 
 <div align="center">
 
@@ -73,7 +73,7 @@ Floor rendering is a bit lame, we are working on this bug at the moment. If you 
 
 </div>
 
-# License
+# Лицензия
 
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
