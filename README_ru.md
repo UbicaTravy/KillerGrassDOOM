@@ -81,7 +81,7 @@ MAINICON ICON "img/icon.ico"
 
 ### Created by KillerGrass
 
-<img src="img/killergrass_logo.jpg" width="400" alt="KillerGrass_logo"/> 
+<img src="img/killergrass_logo.jpg" width="400" alt="KillerGrass_logo"/>
 
 [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/UbicaTravy)
 
@@ -95,6 +95,6 @@ MAINICON ICON "img/icon.ico"
 
 ## Contacts
 
-[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=flat&logo=telegram&logoColor=white)](https://t.me/killer_grass1834)
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=flat&logo=telegram&logoColor=white)](https://t.me/KillerGrassContactBot)
 [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:killergrasscontact@gmail.com)
 </div>

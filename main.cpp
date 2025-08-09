@@ -22,15 +22,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow) {
     int winWidth = rect.right - rect.left;
     int winHeight = rect.bottom - rect.top;
     
-    HWND hwnd = CreateWindowExW(0, CLASS_NAME, L"KG DOOM v0.1",
+    HWND hwnd = CreateWindowExW(0, CLASS_NAME, L"KillerGrass DOOM v0.1",
         WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
         CW_USEDEFAULT, CW_USEDEFAULT,
         winWidth, winHeight,
         NULL, NULL, hInstance, NULL);
     
     if (!hwnd) return 0;
-    
-    SetWindowTextW(hwnd, L"KillerGrass DOOM v0.1");
     
     InitTrigTables();
     InitGame();
